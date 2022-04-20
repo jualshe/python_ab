@@ -20,9 +20,9 @@ class UntitledTestCase(unittest.TestCase):
         driver.get("https://www.kanopy.us/")
         driver.find_element_by_id("button_widget_1640300835539").click()
         # ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_1 | ]]
-        driver.find_element_by_name("first_name").click()
-        driver.find_element_by_name("first_name").clear()
-        driver.find_element_by_name("first_name").send_keys("li")
+       # driver.find_element(By.NAME("first_name")).click()
+        #driver.find_element(By.NAME("first_name")).clear()
+        driver.find_element(By.NAME("first_name")).send_keys("li")
         driver.find_element_by_name("last_name").clear()
         driver.find_element_by_name("last_name").send_keys("na")
         driver.find_element_by_name("email").clear()
