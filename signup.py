@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
 
+from selenium.webdriver.support.wait import WebDriverWait
+
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -17,26 +19,22 @@ class UntitledTestCase(unittest.TestCase):
 
     def open_signup_page(self, driver):
         # open signup page
-        driver.find_element(By.ID("button_widget_1640300835539")).click()
-
+        driver.find_element(By.ID, 'button_widget_1640300835539').click()
 
     def test_signup(self):
         driver = self.driver
         self.open_home_page(driver)
-
         self.open_signup_page(driver)
-
         #enter new user data
         # ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_1 | ]]
-        # driver.find_element(By.NAME("first_name")).click()
-        # driver.find_element(By.NAME("first_name")).clear()
-        driver.find_element(By.NAME("first_name")).send_keys("li")
-        driver.find_element_by_name("last_name").clear()
-        driver.find_element_by_name("last_name").send_keys("na")
-        driver.find_element_by_name("email").clear()
-        driver.find_element_by_name("email").send_keys("lina@mailinator.com")
-        driver.find_element_by_name("password").clear()
-        driver.find_element_by_name("password").send_keys("12345678")
+        driver.find_element(By.NAME, 'first_name').click()
+        driver.find_element(By.NAME, 'first_name').send_keys("li")
+        driver.find_element(By.NAME, 'last_name').clear()
+        driver.find_element(By.NAME, 'last_name').send_keys("na")
+        driver.find_element(By.NAME, 'email').clear()
+        driver.find_element(By.NAME, 'email').send_keys("lina@mailinator.com")
+        driver.find_element(By.NAME, 'password').clear()
+        driver.find_element(By.NAME, 'password').send_keys("12345678")
         #select agree checkbox
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div/div[7]/div/div/div/div[2]").click()
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div[2]/div/button/div").click()
