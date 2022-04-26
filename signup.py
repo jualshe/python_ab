@@ -2,10 +2,10 @@
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
-import unittest
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
+import unittest
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -17,29 +17,52 @@ class UntitledTestCase(unittest.TestCase):
     def open_home_page(self, driver):
         driver.get("https://www.kanopy.us/")
 
-    def open_signup_page(self, driver):
+    def click_signup_button(self, driver):
         # open signup page
         driver.find_element(By.ID, 'button_widget_1640300835539').click()
 
     def test_signup(self):
         driver = self.driver
         self.open_home_page(driver)
-        self.open_signup_page(driver)
-        #enter new user data
-        # ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_1 | ]]
+
+        # Setup wait for later
+        wait = WebDriverWait(driver, 10)
+
+        # Store the ID of the original window
+        original_window = driver.current_window_handle
+
+        # Check we don't have other windows open already
+        assert len(driver.window_handles) == 1
+
+        #click signup button
+        self.click_signup_button(driver)
+
+        # Wait for the new window or tab
+        wait.until(EC.number_of_windows_to_be(2))
+
+        # Loop through until we find a new window handle
+        for window_handle in driver.window_handles:
+            if window_handle != original_window:
+                driver.switch_to.window(window_handle)
+                break
+
+
+        # enter new user data
         driver.find_element(By.NAME, 'first_name').click()
-        driver.find_element(By.NAME, 'first_name').send_keys("li")
+        driver.find_element(By.NAME, 'first_name').send_keys("lil")
         driver.find_element(By.NAME, 'last_name').clear()
-        driver.find_element(By.NAME, 'last_name').send_keys("na")
+        driver.find_element(By.NAME, 'last_name').send_keys("nan")
         driver.find_element(By.NAME, 'email').clear()
-        driver.find_element(By.NAME, 'email').send_keys("lina@mailinator.com")
+        driver.find_element(By.NAME, 'email').send_keys("lilnann@mailinator.com")
         driver.find_element(By.NAME, 'password').clear()
         driver.find_element(By.NAME, 'password').send_keys("12345678")
-        #select agree checkbox
+        # select agree checkbox
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div/div[7]/div/div/div/div[2]").click()
+        # click create account button
+
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div[2]/div/button/div").click()
-        driver.find_element_by_name("vcode").click()
-        #click create account button
+
+        #verification code field - driver.find_element_by_name("vcode").click()
 
 
     def is_element_present(self, how, what):
@@ -68,10 +91,11 @@ class UntitledTestCase(unittest.TestCase):
         finally:
             self.accept_next_alert = True
 
+
+
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-
 
 if __name__ == "__main__":
     unittest.main()
