@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import unittest
 
+
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = WebDriver()
@@ -34,7 +35,7 @@ class UntitledTestCase(unittest.TestCase):
         # Check we don't have other windows open already
         assert len(driver.window_handles) == 1
 
-        #click signup button
+        # click signup button
         self.click_signup_button(driver)
 
         # Wait for the new window or tab
@@ -45,7 +46,6 @@ class UntitledTestCase(unittest.TestCase):
             if window_handle != original_window:
                 driver.switch_to.window(window_handle)
                 break
-
 
         # enter new user data
         driver.find_element(By.NAME, 'first_name').click()
@@ -62,8 +62,7 @@ class UntitledTestCase(unittest.TestCase):
 
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div[2]/div/button/div").click()
 
-        #verification code field - driver.find_element_by_name("vcode").click()
-
+        # verification code field - driver.find_element_by_name("vcode").click()
 
     def is_element_present(self, how, what):
         try:
@@ -91,11 +90,10 @@ class UntitledTestCase(unittest.TestCase):
         finally:
             self.accept_next_alert = True
 
-
-
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
+
 
 if __name__ == "__main__":
     unittest.main()
