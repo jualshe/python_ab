@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import unittest
+from user import User
 
 
 class UntitledTestCase(unittest.TestCase):
@@ -48,14 +49,8 @@ class UntitledTestCase(unittest.TestCase):
                 break
 
         # enter new user data
-        driver.find_element(By.NAME, 'first_name').click()
-        driver.find_element(By.NAME, 'first_name').send_keys("lil")
-        driver.find_element(By.NAME, 'last_name').clear()
-        driver.find_element(By.NAME, 'last_name').send_keys("nan")
-        driver.find_element(By.NAME, 'email').clear()
-        driver.find_element(By.NAME, 'email').send_keys("lilnann@mailinator.com")
-        driver.find_element(By.NAME, 'password').clear()
-        driver.find_element(By.NAME, 'password').send_keys("12345678")
+        self.signup_user_data(driver, User(email="lilonann@mailinator.com", password="12345678", firstname="lil",
+                                           lastname="nan"))
         # select agree checkbox
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div/div[7]/div/div/div/div[2]").click()
         # click create account button
@@ -63,6 +58,16 @@ class UntitledTestCase(unittest.TestCase):
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div[2]/div/button/div").click()
 
         # verification code field - driver.find_element_by_name("vcode").click()
+
+    def signup_user_data(self, driver, user):
+        driver.find_element(By.NAME, 'first_name').click()
+        driver.find_element(By.NAME, 'first_name').send_keys(user.firstname)
+        driver.find_element(By.NAME, 'last_name').clear()
+        driver.find_element(By.NAME, 'last_name').send_keys(user.lastname)
+        driver.find_element(By.NAME, 'email').clear()
+        driver.find_element(By.NAME, 'email').send_keys(user.email)
+        driver.find_element(By.NAME, 'password').clear()
+        driver.find_element(By.NAME, 'password').send_keys(user.password)
 
     def is_element_present(self, how, what):
         try:
