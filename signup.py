@@ -17,11 +17,11 @@ class UntitledTestCase(unittest.TestCase):
         self.accept_next_alert = True
 
     def open_home_page(self, driver):
-        driver.get("https://www.kanopy.us/")
+        driver.get("https://app.kanopy.us/")
 
     def click_signup_button(self, driver):
         # open signup page
-        driver.find_element(By.ID, 'button_widget_1640300835539').click()
+        driver.find_element(By.LINK_TEXT, "Create an account").click()
 
     def test_signup(self):
         driver = self.driver
@@ -31,22 +31,22 @@ class UntitledTestCase(unittest.TestCase):
         wait = WebDriverWait(driver, 10)
 
         # Store the ID of the original window
-        original_window = driver.current_window_handle
+        # original_window = driver.current_window_handle
 
         # Check we don't have other windows open already
-        assert len(driver.window_handles) == 1
+        # assert len(driver.window_handles) == 1
 
         # click signup button
         self.click_signup_button(driver)
 
         # Wait for the new window or tab
-        wait.until(EC.number_of_windows_to_be(2))
+        # wait.until(EC.number_of_windows_to_be(2))
 
         # Loop through until we find a new window handle
-        for window_handle in driver.window_handles:
-            if window_handle != original_window:
-                driver.switch_to.window(window_handle)
-                break
+        # for window_handle in driver.window_handles:
+        #     if window_handle != original_window:
+        #         driver.switch_to.window(window_handle)
+        #         break
 
         # enter new user data
         self.signup_user_data(driver, User(email="lilonann@mailinator.com", password="12345678", firstname="lil",
