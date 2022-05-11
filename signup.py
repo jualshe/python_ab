@@ -16,20 +16,17 @@ class UntitledTestCase(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def open_home_page(self, driver):
+    def open_home_page(self):
+        driver = self.driver
         driver.get("https://app.kanopy.us/")
 
-    def click_signup_button(self, driver):
+    def click_signup_button(self):
         # open signup page
+        driver = self.driver
         driver.find_element(By.LINK_TEXT, "Create an account").click()
 
     def test_signup(self):
-        driver = self.driver
         self.open_home_page(driver)
-
-        # Setup wait for later
-        wait = WebDriverWait(driver, 10)
-
         # Store the ID of the original window
         # original_window = driver.current_window_handle
 
@@ -59,7 +56,8 @@ class UntitledTestCase(unittest.TestCase):
 
         # verification code field - driver.find_element_by_name("vcode").click()
 
-    def signup_user_data(self, driver, user):
+    def signup_user_data(self, user):
+        driver = self.driver
         driver.find_element(By.NAME, 'first_name').click()
         driver.find_element(By.NAME, 'first_name').send_keys(user.firstname)
         driver.find_element(By.NAME, 'last_name').clear()
@@ -69,36 +67,31 @@ class UntitledTestCase(unittest.TestCase):
         driver.find_element(By.NAME, 'password').clear()
         driver.find_element(By.NAME, 'password').send_keys(user.password)
 
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
+    # def is_element_present(self, how, what):
+    #     try:
+    #         self.driver.find_element(by=how, value=what)
+    #     except NoSuchElementException as e:
+    #         return False
+    #     return True
+    #
+    # def is_alert_present(self):
+    #     try:
+    #         self.driver.switch_to_alert()
+    #     except NoAlertPresentException as e:
+    #         return False
+    #     return True
+    #
+    # def close_alert_and_get_its_text(self):
+    #     try:
+    #         alert = self.driver.switch_to_alert()
+    #         alert_text = alert.text
+    #         if self.accept_next_alert:
+    #             alert.accept()
+    #         else:
+    #             alert.dismiss()
+    #         return alert_text
+    #     finally:
+    #         self.accept_next_alert = True
 
     def tearDown(self):
         self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
-
-
-if __name__ == "__main__":
-    unittest.main()
