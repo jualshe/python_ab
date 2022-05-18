@@ -2,9 +2,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 
+# in fuxture there are all helper methods(not test methods)
 class Application:
     def __init__(self):
-        # self.destroy = None
         self.driver = WebDriver()
         self.driver.implicitly_wait(30)
 
@@ -16,7 +16,7 @@ class Application:
         driver = self.driver
         driver.find_element(By.LINK_TEXT, "Create an account").click()
 
-    def signup_user_data(self, user):
+    def input_user_data(self, user):
         driver = self.driver
         driver.find_element(By.NAME, 'first_name').click()
         driver.find_element(By.NAME, 'first_name').send_keys(user.firstname)
@@ -33,5 +33,4 @@ class Application:
         driver.find_element_by_xpath("//div[@id='root']/div/div[2]/div/div[2]/div[2]/div/button/div").click()
 
     def destroy(self):
-        driver = self.driver
         self.driver.quit()
