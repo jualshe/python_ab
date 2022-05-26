@@ -1,6 +1,6 @@
 import pytest
-from user import User
-from application import Application
+from model.user import User
+from fixture.application import Application
 
 
 # signup creates the user but doesn't verify it
