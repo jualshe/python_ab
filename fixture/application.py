@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
+from fixture.session import SessionHelper
 
 
 # in fuxture there are all helper methods(not test methods)
@@ -7,6 +8,7 @@ class Application:
     def __init__(self):
         self.driver = WebDriver()
         self.driver.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
     def open_home_page(self):
         driver = self.driver
