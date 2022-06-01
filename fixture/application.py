@@ -12,7 +12,7 @@ class Application:
 
     def open_home_page(self):
         driver = self.driver
-        driver.get("https://app.kanopy.us/")
+        driver.get("https://www.relola.com/login/")
 
     def click_signup_button(self):
         driver = self.driver
