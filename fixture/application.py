@@ -14,6 +14,13 @@ class Application:
         driver = self.driver
         driver.get("https://www.relola.com/login/")
 
+    def login(self):
+        self.open_home_page()
+        self.driver.find_elements(By.ID, "mat-input-0").click()
+
+
+
+
     def click_signup_button(self):
         driver = self.driver
         driver.find_element(By.LINK_TEXT, "Create an account").click()
